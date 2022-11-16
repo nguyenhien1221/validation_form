@@ -40,7 +40,7 @@ const validName = () => {
         activeBtn();
         return false;
     } else {
-        disableBtn;
+        disableBtn();
         nameErr.innerText = "Invalid name";
     }
     return true;
@@ -63,7 +63,7 @@ const validPassword = () => {
     } else {
         passErr.innerText =
             "Password must 8-32 long and at least 1 Uppercase and Lowercase";
-        activeBtn();
+        disableBtn();
     }
 
     return true;
@@ -94,15 +94,14 @@ const btn = document.getElementById("submit");
 btn.addEventListener("click", (e) => {
     e.preventDefault();
     if (!validPassword()) {
-        console.log('false')
-    } 
+        console.log("false");
+    }
     if (!validName()) {
-       console.log('false')
+        console.log("false");
     }
-    if (!validRepassword()){
-        console.log('false')
-    }
-    else {
+    if (!validRepassword()) {
+        console.log("false");
+    } else {
         showNotifi();
     }
 });

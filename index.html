@@ -13,35 +13,35 @@
             <form>
                 <div class="input-group">
                     <label>Username:</label>
+                    <span id="name-err"></span>
                     <input
                         id="name"
                         onkeyup="validName()"
                         type="text"
                         placeholder="Enter your username..."
                     />
-                    <span id="name-err"></span>
                 </div>
 
                 <div class="input-group">
                     <label>Password:</label>
+                    <span id="pass-err"></span>
                     <input
                         id="password"
                         onkeyup="validPassword()"
                         type="password"
                         placeholder="Password..."
                     />
-                    <span id="pass-err"></span>
                 </div>
 
                 <div class="input-group">
                     <label>Password again:</label>
+                    <span id="repass-err"></span>
                     <input
                         id="repassword"
                         onkeyup="validRepassword()"
                         type="password"
                         placeholder="Password again..."
                     />
-                    <span id="repass-err"></span>
                 </div>
 
                 <button id="submit">Submit</button>
