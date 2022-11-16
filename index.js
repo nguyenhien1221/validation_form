@@ -20,22 +20,19 @@ const activeBtn = () => {
     submitBtn.disabled = false;
 };
 
-const checkName = (name) => {
+const validName = () => {
     const regexName = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
     const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-
-    return regexEmail.test(name) || !regexName.test(name) ? true : false;
-};
-
-const validName = () => {
+    
     const nameValue = document.getElementById("name").value;
-
+    let isName =  regexEmail.test(nameValue) || !regexName.test(nameValue) ? true : false;
+    
     if (nameValue == "") {
         disableBtn();
         nameErr.innerText = "This field is required";
         return false;
     }
-    if (checkName(nameValue)) {
+    if (isName) {
         nameErr.innerText = "";
         activeBtn();
         return false;
