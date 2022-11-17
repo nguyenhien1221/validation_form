@@ -74,7 +74,7 @@ const validPassword = () => {
         return false;
     } else {
         passErr.innerText =
-            "*Password must 8-32 long and at least 1 Uppercase and Lowercase";
+            "*Password must be longer than 8 and shorter than 32 characters and at least 1 Uppercase and Lowercase";
         disableBtn();
         isError = true;
     }
