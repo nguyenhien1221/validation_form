@@ -23,6 +23,7 @@
     right: 20px;
     top: 30px;
     font-size: 25px;
+    animation: shownoti 0.4s ease-in;
     z-index: 9;
 }
 .disapear {
@@ -59,12 +60,15 @@ form span {
     background: transparent;
     border: 1px solid black;
     border-radius: 5px;
-    outline: none;
     padding: 10px;
     color: #333;
     font-size: 16px;
     margin-top: 8px;
 }
+.input-group input:focus {
+    outline-color: rgb(76, 116, 155) ;
+}
+
 
 form button{
     width: 100%;
@@ -77,9 +81,25 @@ form button{
     cursor: pointer;
     display: block;
     margin: 30px auto 10px;
+    transition: .3s;
+}
+
+form button:hover{
+    background-color: #636c94;
 }
 
 form button:disabled {
     cursor: default;
     background-color: #dcdeea;
+}
+
+@keyframes shownoti{
+    from{
+        right: 0px;
+        opacity: 0;
+    }
+    to{
+        right: 20px;
+        opacity: 1;
+    }
 }

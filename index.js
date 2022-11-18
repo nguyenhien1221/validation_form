@@ -2,7 +2,7 @@ const nameErr = document.getElementById("name-err");
 const passErr = document.getElementById("pass-err");
 const repassErr = document.getElementById("repass-err");
 
-let isError = false;
+const initNameValue = document.getElementById("name").value;
 
 const showNotifi = () => {
     const notifi = document.getElementById("popup");
@@ -23,32 +23,37 @@ const activeBtn = () => {
     submitBtn.disabled = false;
 };
 
+if (!initNameValue) {
+    disableBtn();
+}
+
 // check username
 const validName = () => {
     const regexName = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
     const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    
+
+    const passValue = document.getElementById("password").value;
     const nameValue = document.getElementById("name").value;
-    let isName =  regexEmail.test(nameValue) || !regexName.test(nameValue) ? true : false;
-    
+    let isName =
+        regexEmail.test(nameValue) || !regexName.test(nameValue) ? true : false;
+
     if (nameValue == "") {
         disableBtn();
         nameErr.innerText = "*This field is required";
-        isError = true;
         return false;
     }
     if (isName) {
-        if (isError) {
+        if (!passValue) {
+            nameErr.innerText = "";
             disableBtn();
         } else {
             activeBtn();
+            nameErr.innerText = "";
+            return false;
         }
-        nameErr.innerText = "";
-        return false;
     } else {
         disableBtn();
         nameErr.innerText = "*Invalid username";
-        isError = true;
     }
     return true;
 };
@@ -57,18 +62,50 @@ const validName = () => {
 const validPassword = () => {
     const regexPass = /^(?=.*?[A-Z])(?=.*?[a-z]).{8,32}$/;
     const passValue = document.getElementById("password").value;
+    const nameValue = document.getElementById("name").value;
 
     if (passValue == "") {
         passErr.innerText = "*This field is required";
-        isError = true;
         disableBtn();
         return false;
     }
     if (regexPass.test(passValue)) {
-        if (isError) {
-            disableBtn();
+        if (initNameValue) {
+            if (initNameValue) {
+                activeBtn();
+            } else {
+                if (validRepassword()) {
+                    if (initNameValue) {
+                        activeBtn();
+                    } else {
+                        if (!validName()) {
+                            activeBtn();
+                        } else {
+                            repassErr.innerText = "";
+                            disableBtn();
+                        }
+                    }
+                } else {
+                    disableBtn();
+                }
+            }
         } else {
-            activeBtn();
+            if (nameValue) {
+                if (validRepassword()) {
+                    activeBtn();
+                } else {
+                    repassErr.innerText = "*Password does not match";
+                    disableBtn();
+                }
+            } else {
+                if (nameValue) {
+                    activeBtn();
+                } else {
+                    nameErr.innerText = "*This field is required";
+                    repassErr.innerText = "";
+                    disableBtn();
+                }
+            }
         }
         passErr.innerText = "";
         return false;
@@ -76,7 +113,6 @@ const validPassword = () => {
         passErr.innerText =
             "*Password must be longer than 8 and shorter than 32 characters and at least 1 Uppercase and Lowercase";
         disableBtn();
-        isError = true;
     }
     return true;
 };
@@ -85,22 +121,46 @@ const validPassword = () => {
 const validRepassword = () => {
     const rePasswordValue = document.getElementById("repassword").value;
     const passValue = document.getElementById("password").value;
+    const nameValue = document.getElementById("name").value;
 
     if (rePasswordValue == "") {
         repassErr.innerText = "*This field is required";
-        isError = true;
+
         disableBtn();
         return false;
     }
     if (passValue != rePasswordValue) {
         repassErr.innerText = "*Password does not match";
         disableBtn();
-        isError = true;
         return false;
     } else {
-        repassErr.innerText = "";
-        isError = false;
-        activeBtn();
+        if (!validName()) {
+            if (initNameValue) {
+                console.log();
+                repassErr.innerText = "";
+                activeBtn();
+            } else {
+                if (!validName()) {
+                    if (initNameValue) {
+                        activeBtn();
+                    } else {
+                        if (nameValue) {
+                            repassErr.innerText = "";
+                            activeBtn();
+                        } else {
+                            repassErr.innerText = "";
+                            disableBtn();
+                        }
+                    }
+                } else {
+                    repassErr.innerText = "";
+                    disableBtn();
+                }
+            }
+        } else {
+            repassErr.innerText = "";
+            activeBtn();
+        }
     }
     return true;
 };
@@ -114,6 +174,6 @@ btn.addEventListener("click", (e) => {
         console.log("false");
     } else {
         showNotifi();
-        console.log('success');
+        console.log("success");
     }
 });
